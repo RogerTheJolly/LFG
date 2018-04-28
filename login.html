@@ -50,22 +50,11 @@
 			<input type = "submit" value = "Facebook Popup" onclick = "popup(facebookProvider)")><br>-->
 			<input type = "submit" value = "Google Redirect" onclick = "firebase.auth().signInWithRedirect(googleProvider)")><br>
 			<input type = "submit" value = "Facebook Redirect" onclick = "firebase.auth().signInWithRedirect(facebookProvider)")><br>
-			<input type = "submit" value = "Log Out" onclick = "firebase.auth().signOut()"><br>
+			<input type = "submit" value = "Log Out" onclick = "firebase.auth().signOut(); 
+				window.location = 'https://localhost/LFG/login.html';"><br>
 		</div>
 		
 		<script>
-		/*let firebaseAppDefined = false
-
-setInterval(() => {
-  if (!firebaseAppDefined) {
-    if (firebase.app()) {
-      // Your code here
-		console.log("LOADED");
-      firebaseAppDefined = true
-    }
-	else console.log("NOT LOADED");
-  }
-}, 100)*/
 			function login(username, password){
 				console.log(username, password);
 				firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
@@ -93,6 +82,7 @@ setInterval(() => {
 				var isAnonymous = user.isAnonymous;
 				var uid = user.uid;
 				var providerData = user.providerData;
+				window.location = 'https://localhost/LFG/home.html';
 				// ...
 			  } else {
 				// User is signed out.
