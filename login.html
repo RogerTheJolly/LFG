@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	
+		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
+		<script>
+		  // Initialize Firebase
+		  var config = {
+			apiKey: "AIzaSyDRxg8vjc7DYr0oad51DvHikFedkUGPMeY",
+			authDomain: "looking-for-group-26a4c.firebaseapp.com",
+			databaseURL: "https://looking-for-group-26a4c.firebaseio.com",
+			projectId: "looking-for-group-26a4c",
+			storageBucket: "looking-for-group-26a4c.appspot.com",
+			messagingSenderId: "650436913318"
+		  };
+		  firebase.initializeApp(config);
+		  var provider = new firebase.auth.GoogleAuthProvider();
+		</script>
+		
+		
+	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Meal Prep Station</title>
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+		<!-- Custom styles for this template -->
+		<link href="css/layout.css" rel="stylesheet">
+	
+	</head>
+	
+	<body>
+		<div id = "loginBox">
+			<div id = "loginTitle">
+				Looking For Group
+			</div>
+			<input type = "text" placeholder = "Username" id = "username"><br>
+			<input type = "password" placeholder = "Password" id = "password"><br>
+			<input type = "submit" value = "Submit" onclick = "login(document.getElementById('username').value, document.getElementById('password').value);"><br>
+			<input type = "submit" value = "Create" onclick = "createAccount(document.getElementById('username').value, document.getElementById('password').value);"><br>
+			<input type = "submit" value = "Google Popup" onclick = "popup(provider)")><br>
+			<input type = "submit" value = "Google Redirect" onclick = "firebase.auth().signInWithRedirect(provider);")><br>
+			<input type = "submit" value = "Log Out" onclick = "firebase.auth().signOut()"><br>
+		</div>
+		
+		<script>
+		/*let firebaseAppDefined = false
+
+setInterval(() => {
+  if (!firebaseAppDefined) {
+    if (firebase.app()) {
+      // Your code here
+		console.log("LOADED");
+      firebaseAppDefined = true
+    }
+	else console.log("NOT LOADED");
+  }
+}, 100)*/
+			function login(username, password){
+				console.log(username, password);
+				firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
+				  // Handle Errors here.
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+			});
+			}
+			function createAccount(username, password){
+				firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
+				  // Handle Errors here.
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  // ...
+				});
+			}
+			firebase.auth().onAuthStateChanged(function(user) {
+			  if (user) {
+				// User is signed in.
+				console.log("SIGNED IN", user);
+				var displayName = user.displayName;
+				var email = user.email;
+				var emailVerified = user.emailVerified;
+				var photoURL = user.photoURL;
+				var isAnonymous = user.isAnonymous;
+				var uid = user.uid;
+				var providerData = user.providerData;
+				// ...
+			  } else {
+				// User is signed out.
+				console.log("SIGNED OUT");
+			  }
+			});
+			function popup(provider){
+				firebase.auth().signInWithPopup(provider).then(function(result) {
+				  // This gives you a Google Access Token. You can use it to access the Google API.
+				  var token = result.credential.accessToken;
+				  // The signed-in user info.
+				  var user = result.user;
+				  // ...
+				}).catch(function(error) {
+				  // Handle Errors here.
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  // The email of the user's account used.
+				  var email = error.email;
+				  // The firebase.auth.AuthCredential type that was used.
+				  var credential = error.credential;
+				  // ...
+				});
+			}
+			</script>
+	
+	</body>
+</html>
