@@ -1,0 +1,79 @@
+html, body{
+    margin: 0;
+    padding: 0;
+
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+
+	min-height: 100%;
+    height: 100%;
+	font-family: 'Nunito', sans-serif;
+}
+input, button{
+	font-family: 'Nunito', sans-serif;
+	font-weight: 700;
+	width: 50%;
+}
+body {
+  overflow-x: hidden;
+  text-align: center;
+}
+#loginBox{
+	width: 50%;
+	height: auto;
+	//position: absolute;
+	//top: 10%;
+	//left: 50%;
+	margin: auto;
+	//margin-top: 10%;
+	margin-top: 50px;
+	//border: 2px solid #111;
+	//border-radius: 5px;
+}
+#loginTitle{
+	text-align: center;
+	font-weight: bold;
+	font-size: 25px;
+	color: #111;
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 5px solid #333;
+}
+#loginBox input {
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  padding: 15px 0;
+  outline: none;
+  width: 100%;
+  margin-top: 20px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+}
+
+#loginBox input:focus {
+  border: 1px solid #777;
+}
+
+#loginBox button{
+  background: #5d8ffc;
+  color: #fff;
+  border: 1px solid #5d8ffc;
+  border-radius: 5px;
+  padding: 15px;
+  display: block;
+  width: 100%;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+}
+
+#loginBox button:hover{
+  background: #fff;
+  color: #5d8ffc;
+  border: 1px solid #5d8ffc;
+  cursor: pointer;
+}

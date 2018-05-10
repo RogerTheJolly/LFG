@@ -17,7 +17,7 @@ html, body{
 body {
   overflow-x: hidden;
   display: none;
-}
+}	
 #topRow{
 	height: 150px;
 	width: 100%;
@@ -209,20 +209,41 @@ body {
 	position: absolute;
 	display: block;
 }
+.grid{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 5px;
+	grid-row-gap: 5px;
+}
 .item{
-	width: 98%;
+	//width: 98%;
 	height: 300px;
 	background-color: #AAA;
 	border: 1px solid black;
-	display: inline-block;
+	display: none;
 }
-@media(min-width:560px) {
+@media(max-width:550px) {
+	.grid{
+		grid-template-columns: 1fr;
+	}
 	.item{
-		width: 49%;
+		//width: 49%;
 		height: 300px;
 		background-color: #AAA;
 		border: 1px solid black;
-		display: inline-block;
+		display: none;
+	}
+}
+@media(min-width:560px) {
+	.grid{
+		grid-template-columns: 1fr 1fr;
+	}
+	.item{
+		//width: 49%;
+		height: 300px;
+		background-color: #AAA;
+		border: 1px solid black;
+		display: none;
 	}
 }
 @media(min-width:768px) {
@@ -240,12 +261,16 @@ body {
 		display: table-row;
 		height: 300px;
 	}
+	.grid{
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 	.item{
-		width: 32.5%;
+		
+		//width: 32.5%;
 		height: 300px;
 		background-color: #AAA;
 		border: 1px solid black;
-		display: inline-block;
+		display: none;
 	}
 	.item:hover{
 		background-color: gray;
@@ -278,11 +303,14 @@ body {
 	}
 }
 @media(min-width:1351px) {
+	.grid{
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
 	.item{
-		width: 24.7%;
+		//width: 24.7%;
 		height: 300px;
 		background-color: #AAA;
 		border: 1px solid black;
-		display: inline-block;
+		display: none;
 	}
 }
