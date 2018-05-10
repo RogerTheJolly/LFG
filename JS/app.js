@@ -15,3 +15,5 @@ var facebookProvider = new firebase.auth.FacebookAuthProvider();
 const db = firebase.firestore();
 const settings = {timestampsInSnapshots: true};
 db.settings(settings);
+
+TEST
