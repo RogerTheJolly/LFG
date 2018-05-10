@@ -209,7 +209,7 @@ body {
 	position: absolute;
 	display: block;
 }
-.grid{
+#grid{
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: 5px;
@@ -223,7 +223,7 @@ body {
 	display: none;
 }
 @media(max-width:550px) {
-	.grid{
+	#grid{
 		grid-template-columns: 1fr;
 	}
 	.item{
@@ -235,7 +235,7 @@ body {
 	}
 }
 @media(min-width:560px) {
-	.grid{
+	#grid{
 		grid-template-columns: 1fr 1fr;
 	}
 	.item{
@@ -261,7 +261,7 @@ body {
 		display: table-row;
 		height: 300px;
 	}
-	.grid{
+	#grid{
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 	.item{
@@ -303,7 +303,7 @@ body {
 	}
 }
 @media(min-width:1351px) {
-	.grid{
+	#grid{
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 	.item{
