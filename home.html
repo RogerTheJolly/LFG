@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 
 <head>
 	
@@ -18,10 +18,15 @@
     <!-- Custom styles for this template -->
     <link href="css/home.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+	<script src="JS/AngularModule.js"></script>
 
 </head>
 
-<body>
+<body>	
 	<div id = "topBar">
 		<!-- hamburger -->
 		<div id = "menu-toggle" onclick = "#menu-toggle">
@@ -45,7 +50,7 @@
                     </a>
                 </li>-->
                 <li>
-                    <a href="#">Dashboard</a>
+                    <a href="#/">Dashboard</a>
                 </li>
                 <li>
                     <a href="#">Shortcuts</a>
@@ -63,7 +68,7 @@
                     <a href="#">Services</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#" id = "contact">Contact</a>
                 </li>
 				<li>
                     <a href="#" onclick = "firebase.auth().signOut(); window.location = 'https://localhost/LFG/login.html';">Log Out</a>
@@ -74,6 +79,9 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
+		<div id = "groupPopUp" ng-controller= 'HomeController'>
+				{{testText}}	
+			</div>
             <div class="container-fluid">
 				<div id = "topRow">
 					<img src = "images\dice.png" style = "width: 100%; height: 100%">
@@ -100,14 +108,15 @@
 	<script src="JS/app.js"></script>
 	<script>
 	firebase.auth().onAuthStateChanged(function(user) {
-			  if (!user) {
-				console.log("SIGNED OUT");
-				window.location = 'https://localhost/LFG/login.html';
-			  }
-			  else{
-				document.getElementsByTagName("BODY")[0].style.display = "block";
-			}
-			});
+	  if (!user) {
+		console.log("SIGNED OUT");
+		window.location = 'https://localhost/LFG/login.html';
+	  }
+	  else{
+		document.getElementsByTagName("BODY")[0].style.display = "block";
+	}
+	});
+			
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -136,7 +145,10 @@
 	
 	//Get groups and set backgrounds
 	var counter = 0;
+	var groupPopUp = document.getElementById('groupPopUp');
 	var grid = document.getElementById('grid');
+	
+	//Get the Groups from the DB
 	db.collection("groups").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
 			//console.log(`${doc.id} => ${doc.data()}`);
@@ -145,14 +157,16 @@
 			item.classList.add("item");
 			grid.appendChild(item);
 			
-			var group = document.getElementsByClassName('item')[counter];
 			var image = doc.data().image.toString();
-			
-			group.style.display = "inline-block";
-			
-			image = image.replace('300', group.offsetWidth);
-			image = image.replace('200', group.offsetHeight);
-			group.style.backgroundImage = "url('" + image +"')";
+
+			/*item.addEventListener("click", function(){
+			console.log("clicky");
+				groupPopUp.style.display = "block";
+			});*/
+
+			image = image.replace('300', item.offsetWidth);
+			image = image.replace('200', item.offsetHeight);
+			item.style.backgroundImage = "url('" + image +"')";
 			counter++;
 		});
 	});
