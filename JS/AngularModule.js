@@ -4,21 +4,21 @@ app.config(function($routeProvider)
 {
     $routeProvider
 
-        .when('/',
+    .when('/',
     {
-        templateUrl: '/LFG/home.html'
+        templateUrl: 'home.html',
+		controller: 'HomeController'
     })
 
-    .when('/blog',
+    .when('/group',
     {
-        templateUrl: '/blog.html',
-        controller: 'BlogController'
+        templateUrl: 'group.html',
+		controller: 'GroupController'
     })
 
     .when('/about',
     {
         templateUrl: '/about.html',
-        controller: 'AboutController'
     })
 
     .otherwise(
@@ -27,26 +27,19 @@ app.config(function($routeProvider)
     });
 });
 
-app.controller('HomeController', function($scope)
+app.controller('HomeController', function($scope, $location, $window)
 {
 	$scope.testText = "Test Text";
-	
-	/*db.collection("groups").get().then((querySnapshot) => {
-		querySnapshot.forEach((doc) => {
-			//console.log(`${doc.id} => ${doc.data()}`);
-			$scope.groupName = doc.id;
-			
-		});
-	});*/
 	
 	$scope.runJS = true;
 	
 	// Run after view loaded.
-	$scope.loadGroups = function(){
+	var counter = 0;
+	$scope.loadGroups = function(index){
 		if($scope.runJS)
 		{
-			console.log("HOME LAODED");
-			//Get groups and set backgrounds
+			console.log("HOME LOADED");
+			
 			var grid = document.getElementById('grid');
 			
 			//Get the Groups from the DB
@@ -59,28 +52,50 @@ app.controller('HomeController', function($scope)
 					grid.appendChild(item);
 					
 					var image = doc.data().image.toString();
-
-					/*item.addEventListener("click", function(){
-					console.log("clicky");
-						groupPopUp.style.display = "block";
-					});*/
+					
+					(function(i) {	
+						item.addEventListener("click", function(){
+							console.log("event listener " + i);
+							$scope.clicked = i;
+							//$location.path('/group');
+							$scope.groupName = "TEST";
+							$window.location = "/LFG/index.html#/group?" + doc.id;
+						});
+					})(counter);
 
 					image = image.replace('300', item.offsetWidth);
 					image = image.replace('200', item.offsetHeight);
 					item.style.backgroundImage = "url('" + image +"')";
+					counter++;
 				});
 			});
 			$scope.runJS = false;
 		}
 	};
+	$scope.openGroup = function(groupNumber){
+		console.log("CLICKED " + groupNumber);
+		return "group.html"
+	}
+	
+	$scope.loadGroups();
 });
 
-app.controller('BlogController', function($scope)
+app.controller('GroupController', function($scope, $window)
 {
-    getData();
+    console.log('GroupController');
+	$scope.groupName = $window.location.toString().split("?-")[1];
+		/*$scope.groupName = [];
+	
+	db.collection("groups").get().then((querySnapshot) => {
+		querySnapshot.forEach((doc) => {
+			//console.log(`${doc.id} => ${doc.data()}`);
+			$scope.groupName[counter] = doc.id;
+			//console.log($scope.groupName[counter]);
+		});
+	});*/
 });
 
 app.controller('AboutController', function($scope)
 {
-    getData();
+	
 });

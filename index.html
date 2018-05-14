@@ -84,16 +84,11 @@
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper"  ng-controller= 'HomeController'>
-			<div ng-include = "'home.html'">
-				<ng-include src = "loadGroups()"></ng-include>
-			</div>
-		
-		<!--<script type="text/ng-template" id="LFG/home.html">
-			<h1>Home</h1>
-			<h3>{{message}}</h3>
-		</script>-->
-        </div>
+        <div id="page-content-wrapper">
+			<!--<div ng-include = "'home.html'" onload = "loadGroups()"></div>-->
+			<div ng-view></div>
+			<!--<ng-include src = "openGroup()"></ng-include>-->
+
         <!-- /#page-content-wrapper -->
 
     </div>
