@@ -2,6 +2,36 @@
 {{groupName}}
 </div>
 <div id = "groupGrid">
-	<div id = "groupLeft"></div>
-	<div id = "groupRight"></div>
+	<div id = "groupLeft">
+		<div id = "groupImgParent">
+			<img src = {{groupImage}}>
+		</div>
+		<br><br>
+		{{groupDesc}}
+	</div>
+	<div id = "groupRight">
+		<ul>
+			<li ng-repeat = "property in properties" ng-init="type = property.type; key = property.key">
+				{{key}}
+				<ul>
+					<li ng-repeat = "value in property.values" ng-init = "path = key + '.' + value">
+						{{value}}
+						
+						<span ng-if = "type == 'haveNeed'">
+							{{result = getProperty(path);""}}
+							<ul>
+								<li>{{"Have: " + result.have}}</li>
+								<li>{{"Need: " + result.need}}</li>
+							</ul>
+						</span>
+						
+						<span ng-if = "type == 'checkboxes'">
+							{{": "}}
+							{{result = getProperty(path)}}
+						</span>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
 </div>
