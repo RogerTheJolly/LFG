@@ -32,6 +32,11 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 	$scope.runJS = true;
 	var firstLoad = true;
 	
+	$scope.setUser = function(user){
+		$scope.user = {};
+		$scope.user[user] = true;
+	};
+	
 	$scope.createGroup = function(){
 		console.log("CREATING GROUP", $rootScope.optionValues);
 		
@@ -83,7 +88,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 				var key2 = Object.keys($rootScope.optionValues)[j+1];
 				var keySplit = key.split('.');
 				var keySplit2 = key2.split('.');
-				console.log(key);
+				//console.log(key);
 				
 				if(key != "game")
 				{
@@ -92,7 +97,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 						if(keySplit.length == 2)
 						{
 							var path = keyArray[i] + "." + keySplit[1];
-							console.log(path, $rootScope.optionValues[path]);
+							//console.log(path, $rootScope.optionValues[path]);
 							//console.log($rootScope.optionValues.Type.Offline)
 							temp += '"' + keySplit[1] + '":' + $rootScope.optionValues[path];
 							
@@ -105,10 +110,10 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 						//dataObject[Roles] = {"DPS":{"have":true, "need":true},"Healer":{"have":true, "need":true},"Tank":{"have":true, "need":true}}
 						else if(keySplit.length == 3)
 						{
-							console.log(keySplit[2]);
+							//console.log(keySplit[2]);
 							var path = keyArray[i] + "." + keySplit[1] + "." + keySplit[2];
 							var path2 = keyArray[i] + "." + keySplit2[1] + "." + keySplit2[2];
-							console.log($rootScope.optionValues[path]);
+							//console.log($rootScope.optionValues[path]);
 							//       "    Tank           ":{"  have           ":     true                             , "    need            ":    false
 							temp += '"' + keySplit[1] + '":{"' + keySplit[2] + '":' +  $rootScope.optionValues[path] + ', "' + keySplit2[2] + '":' + $rootScope.optionValues[path2] + '}';
 							
@@ -138,6 +143,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 			dataObject[keyArray[i]] = JSON.parse(temp);
 		}
 		console.log(dataObject);
+		console.log($scope.user);
 		
 		
 		db.collection("groups").doc().set({
@@ -146,6 +152,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 			game: $rootScope.optionValues.game,
 			image: "https://picsum.photos/300/200/?random?2018-05-16 07:29:27.380355",
 			properties: dataObject,
+			users: $scope.user,
 		})
 		.then(function() {
 			console.log("Document successfully written!");

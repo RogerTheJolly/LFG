@@ -137,6 +137,7 @@
 		window.location = 'https://localhost/LFG/login.html';
 	  }
 	  else{
+		angular.element(document.getElementById('ngView')).scope().setUser(user.uid);
 		document.getElementsByTagName("BODY")[0].style.display = "block";
 	}
 	});
