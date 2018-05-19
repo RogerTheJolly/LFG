@@ -32,10 +32,10 @@
 
 </head>
 
-<body>	
+<body>
 	<div id = "topBar">
 		<!-- hamburger -->
-		<div id = "menu-toggle" onclick = "#menu-toggle">
+		<div id = "menu-toggle">
 			<img src = "images\hamburger.png">
 		</div>
 		<span>Looking For Group</span>
@@ -45,21 +45,53 @@
 		<input id = "searchBar" type = "text" name = "search" placeholder = "Search">
 	</div>
     <div id="wrapper" class = "toggled">
+	
+		<div id = "filterPopUp" ng-controller = "popUpController">
+			<div id = "filterDiv">
+				<select ng-model="gameSelect" ng-options="x for x in gamesArray" class = "customSelect" ng-change = "gameChanged(gameSelect)"></select><br>
+				<input id = "title" type = "text" ng-model = "groupTitle" placeholder = "Title" ng-change = "titleChanged(groupTitle)"></input><br>
+				<input id = "about" type = "text" ng-model = "groupAbout" placeholder = "About" ng-change = "aboutChanged(groupAbout)"></input>
+				<ul>
+					<li ng-repeat = "property in properties" ng-init="type = property.type; key = property.key">
+						<span class = "key">{{key}}</span>
+						<ul>
+							<li ng-repeat = "value in property.values" ng-init = "path = key + '.' + value">
+								{{value + ":"}}
+								<span ng-if = "type == 'haveNeed'">
+									<br>Have
+									<select ng-attr-class="{{'option'}}" ng-attr-id="{{path + '.have'}}" ng-attr-name="{{path + '.have'}}" ng-model="value" ng-change = "optionChanged(path + '.have', value)" autocomplete="off">
+										<option value = "false" ng-selected="true">False</option>
+										<option value = "true">True</option>
+									</select>
+									<br>Need
+									<select ng-attr-class="{{'option'}}" ng-attr-id="{{path + '.need'}}" ng-attr-name="{{path + '.need'}}" ng-model="value2" ng-change = "optionChanged(path + '.need', value)" autocomplete="off">
+										<option value = "false" ng-selected="true">False</option>
+										<option value = "true">True</option>
+									</select>
+								</span>
+								<span ng-if = "type == 'checkboxes'">
+									</t><input type="checkbox" ng-attr-class="{{'option'}}" ng-attr-id="{{path}}" ng-attr-name="{{path}}" ng-model="value" ng-change = "optionChanged(path, value)">
+								</span>
+							</li><br>
+						</ul>
+					</li><br>
+				</ul>
+			</div>
+			
+			
+			<button id = "applyFilter">Apply Filter</button><br>
+			<button id = "createGroup">Create Group</button>
+		</div>
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
 		
             <ul class="sidebar-nav">
-                <!--<li class="sidebar-brand">
-                    <a href="#">
-                        Looking For Group
-                    </a>
-                </li>-->
                 <li>
                     <a href="#/">Home</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+					<span id = "filter">Filter/Create</span>
                 </li>
                 <li>
                     <a href="#">Overview</a>
@@ -85,11 +117,7 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-			<!--<div ng-include = "'home.html'" onload = "loadGroups()"></div>-->
-			<div ng-view></div>
-			<!--<ng-include src = "openGroup()"></ng-include>-->
-
-        <!-- /#page-content-wrapper -->
+			<div ng-view id = "ngView"></div>
 
     </div>
     <!-- /#wrapper -->
@@ -117,6 +145,18 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+	$("#filter").click(function(e){
+		document.getElementById('filterPopUp').style.display = "block";
+	});
+	$("#applyFilter").click(function(e){
+		document.getElementById('filterPopUp').style.display = "none";
+		angular.element(document.getElementById('ngView')).scope().loadGroups();
+	});
+	$("#createGroup").click(function(e){
+		document.getElementById('filterPopUp').style.display = "none";
+		angular.element(document.getElementById('ngView')).scope().createGroup();
+	});
+	
 	
 	//Open/close the sidebar based on screen size
 	var windowsize = $(window).width();
