@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 	<head>	
 		<meta charset="utf-8">
@@ -29,8 +29,11 @@
 			<button value = "Facebook Popup" onclick = "popup(facebookProvider)")></button><br>-->
 			<button onclick = "firebase.auth().signInWithRedirect(googleProvider)")>Google Redirect</button><br>
 			<button onclick = "firebase.auth().signInWithRedirect(facebookProvider)")>Facebook Redirect</button><br>
-			<button onclick = "firebase.auth().signOut(); 
-				window.location = 'https://localhost/LFG/login.html';">Log Out</button><br>
+			<!--<button onclick = "firebase.auth().signOut(); 
+				window.location = 'https://localhost/LFG/login.html';">Log Out</button><br>-->
+				<button onclick = "firebase.auth().signOut(); 
+				navigate('login.html');">Log Out</button><br>
+				<!--window.location = 'https://66.25.9.47/LFG/login.html';"-->
 		</div>
 		
 
@@ -38,7 +41,7 @@
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
-		<script src="JS/app.js"></script>
+		<script src="js/app.js"></script>
 		<script>
 				function login(username, password){
 					firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
@@ -70,7 +73,9 @@
 					var isAnonymous = user.isAnonymous;
 					var uid = user.uid;
 					var providerData = user.providerData;
-					window.location = 'https://localhost/LFG/index.html';
+					//window.location = 'https://localhost/LFG/index.html';
+					//window.location = 'https://66.25.9.47/LFG/index.html';
+					navigate('index.html');
 					// ...
 				  } else {
 					// User is signed out.
