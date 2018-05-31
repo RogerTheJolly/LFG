@@ -355,10 +355,12 @@ app.controller('GroupController', function($scope, $window)
 app.controller('popUpController', function($scope, $rootScope)
 {
 	var gamesArray = [];
-	db.collection("games").get().then((querySnapshot) => {
+	db.collection("game_list").get().then((querySnapshot) => {
 		querySnapshot.forEach((doc) => {
-			console.log(`${doc.id} => ${doc.data()}`);
-			gamesArray.push(doc.data().title);
+			//console.log(`${doc.id} => ${doc.data()}`);
+			//console.log(doc.data().gamesArray[counter]);
+			console.log("load games");
+			gamesArray = doc.data().gamesArray;
 		});
 		
 		$scope.$apply(function () {
