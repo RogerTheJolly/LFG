@@ -25,9 +25,9 @@
 	<script src="js/AngularModule.js"></script>
 	
 	<style>
-	[ng\:cloak], [ng-cloak], .ng-cloak{
-		display: none;
-	}
+		[ng\:cloak], [ng-cloak], .ng-cloak{
+			display: none;
+		}
 	</style>
 
 </head>
@@ -36,7 +36,7 @@
 	<div id = "topBar">
 		<!-- hamburger -->
 		<div id = "menu-toggle">
-			<img src = "images\hamburger.png">
+			<img src = "images/hamburger.png">
 		</div>
 		<span>Looking For Group</span>
 		<!--<div id = "searchDiv">
@@ -48,9 +48,20 @@
 	
 		<div id = "filterPopUp" ng-controller = "popUpController">
 			<div id = "filterDiv">
-				<select ng-model="gameSelect" ng-options="x for x in gamesArray" class = "customSelect" ng-change = "gameChanged(gameSelect)"></select><br>
-				<input id = "title" type = "text" ng-model = "groupTitle" placeholder = "Title" ng-change = "titleChanged(groupTitle)"></input><br>
-				<input id = "about" type = "text" ng-model = "groupAbout" placeholder = "About" ng-change = "aboutChanged(groupAbout)"></input>
+			
+				<div id = "closeRow">
+					<a id = "closePopUp">Close</a>
+				</div>
+				<form autocomplete="off">
+				  <div class="autocomplete" style="width:300px;">
+					<input id="gameSearch" type="text" name="gameSearch" placeholder="Search...">
+				  </div>
+				  <input type="submit" id = "gameSearchSubmit">
+				</form>
+				
+				<!--<select ng-model="gameSelect" ng-options="x for x in gamesArray" class = "customSelect" ng-change = "gameChanged(gameSelect)"></select>--><br>
+				<input id = "title" type = "text" ng-model = "groupTitle" placeholder = "Title" ng-change = "titleChanged(groupTitle)"><br>
+				<input id = "about" type = "text" ng-model = "groupAbout" placeholder = "About" ng-change = "aboutChanged(groupAbout)">
 				<ul>
 					<li ng-repeat = "property in properties" ng-init="type = property.type; key = property.key">
 						<span class = "key">{{key}}</span>
@@ -117,10 +128,10 @@
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+		<div id="page-content-wrapper">
 			<div ng-view id = "ngView"></div>
 
-    </div>
+		</div>
     <!-- /#wrapper -->
 	<script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -152,6 +163,9 @@
 	$("#filter").click(function(e){
 		document.getElementById('filterPopUp').style.display = "block";
 	});
+	$("#closePopUp").click(function(e){
+		document.getElementById('filterPopUp').style.display = "none";
+	});
 	$("#applyFilter").click(function(e){
 		document.getElementById('filterPopUp').style.display = "none";
 		angular.element(document.getElementById('ngView')).scope().loadGroups();
@@ -160,6 +174,12 @@
 		document.getElementById('filterPopUp').style.display = "none";
 		angular.element(document.getElementById('ngView')).scope().createGroup();
 	});
+	$("#gameSearchSubmit").click(function(e){
+		angular.element(document.getElementById('filterPopUp')).scope().gameChanged(document.getElementById('gameSearch').value);
+	});
+	
+
+	//autocomplete(document.getElementById("gameSearch"), angular.element(document.getElementById('filterPopUp')).scope.gamesArray);
 	
 	
 	//Open/close the sidebar based on screen size
@@ -184,7 +204,7 @@
 	});
 
 	</script>
-
+	</div>
 </body>
 
 </html>

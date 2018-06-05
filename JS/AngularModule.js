@@ -32,6 +32,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 	$scope.runJS = true;
 	var firstLoad = true;
 	
+	//TODO: make this global
 	$scope.setUser = function(user){
 		$scope.user = {};
 		$scope.user[user] = true;
@@ -184,6 +185,14 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 						item.classList.add("item");
 						grid.appendChild(item);
 						
+						var title = document.createElement("div");
+						title.classList.add("groupTitle");
+						
+						if(doc.data().title.length > 0)
+							title.innerHTML = doc.data().title + ": " + doc.data().game;
+						else
+							title.innerHTML = doc.data().game;
+						
 						var image = doc.data().image.toString();
 						
 						(function(i, doc) {	
@@ -196,6 +205,8 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 						image = image.replace('300', item.offsetWidth);
 						image = image.replace('200', item.offsetHeight);
 						item.style.backgroundImage = "url('" + image +"')";
+						item.appendChild(title);
+						
 						counter++;
 					});
 				});
@@ -302,7 +313,13 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 
 app.controller('GroupController', function($scope, $window)
 {
-    console.log('GroupController');
+	//TODO: make this global
+	$scope.setUser = function(user){
+		$scope.user = {};
+		$scope.user[user] = true;
+	};
+	
+    console.log('GroupController', $window.location.toString().split("?")[1]);
 	var docRef = db.collection("groups").doc($window.location.toString().split("?")[1]);
 
 	docRef.get().then(function(doc) {
@@ -347,6 +364,7 @@ app.controller('GroupController', function($scope, $window)
 	}
 	
 	$scope.getProperty = function(path){
+		console.log(path, $scope.groupProperties);
 		path = path.split(".");
 		return($scope.groupProperties[path[0]][path[1]]);
 	}	
@@ -360,12 +378,12 @@ app.controller('popUpController', function($scope, $rootScope)
 			//console.log(`${doc.id} => ${doc.data()}`);
 			//console.log(doc.data().gamesArray[counter]);
 			console.log("load games");
-			gamesArray = doc.data().gamesArray;
+			$scope.$apply(function () {
+				$scope.gamesArray = doc.data().gamesArray;
+			});
 		});
-		
-		$scope.$apply(function () {
-			$scope.gamesArray = gamesArray;
-		});
+		console.log("Games Ready");
+		autocomplete(document.getElementById("gameSearch"), $scope.gamesArray);
 	});
 	$scope.gameChanged = function(game) {
 		//$scope.itemList.push(item.name);
