@@ -27,7 +27,7 @@
 			<!--<button value = "Google Popup" onclick = "popup(googleProvider)")></button><br>
 			<button value = "Facebook Popup" onclick = "popup(facebookProvider)")></button><br>-->
 			<button onclick = "firebase.auth().signInWithRedirect(googleProvider); angular.element(document.getElementById('loginBox')).scope().setLogIn(true)">Google Redirect</button><br>
-			<button onclick = "firebase.auth().signInWithRedirect(facebookProvider); showOverlay();">Facebook Redirect</button><br>
+			<button onclick = "firebase.auth().signInWithRedirect(facebookProvider); angular.element(document.getElementById('loginBox')).scope().setLogIn(true)">Facebook Redirect</button><br>
 			<button onclick = "createAccount(document.getElementById('username').value, document.getElementById('password').value); showOverlay();">Create</button><br>
 			<!--<button onclick = "firebase.auth().signOut(); 
 				window.location = 'https://localhost/LFG/login.html';">Log Out</button><br>-->
@@ -48,10 +48,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
 		<script src="js/AngularModule.js"></script>
 		<script>
-			function showOverlay()
-			{
-				document.getElementById("loginOverlay").style.display = "block";
-			}
 			function login(username, password){
 				firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
 				  // Handle Errors here.
