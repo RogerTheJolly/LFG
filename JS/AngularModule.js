@@ -26,7 +26,30 @@ app.config(function($routeProvider)
         redirectTo: '/'
     });
 });
+/*app.factory('UserService', function() {
+    $sessionStorage.loggingIn = false;
+	
+	
+});*/
 
+app.controller('loginController', function($scope, $rootScope)
+{
+	//This will trigger the loader div
+	$scope.setLogIn = function(bool){
+		
+		sessionStorage.loggingIn = bool;
+		console.log(sessionStorage.loggingIn);
+		
+	};
+	if(sessionStorage.loggingIn == "true")
+		{
+			document.getElementById('loginOverlay').style.display = "block";
+		}
+	else
+	{
+		document.getElementById('loginOverlay').style.display = "none";
+	}
+});
 app.controller('HomeController', function($scope, $location, $window, $rootScope)
 {
 	$scope.runJS = true;

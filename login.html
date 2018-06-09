@@ -1,5 +1,5 @@
  <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 	<head>	
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,89 +17,105 @@
 	</head>
 	
 	<body>
-		<div id = "loginBox">
+		<div id = "loginBox" ng-controller = "loginController">
 			<div id = "loginTitle">
 				Looking For Group
 			</div>
 			<input type = "text" placeholder = "Username" id = "username"><br>
 			<input type = "password" placeholder = "Password" id = "password"><br>
-			<button onclick = "login(document.getElementById('username').value, document.getElementById('password').value);">Log In</button><br>
-			<button onclick = "createAccount(document.getElementById('username').value, document.getElementById('password').value);">Create</button><br>
+			<button onclick = "login(document.getElementById('username').value, document.getElementById('password').value); showOverlay();">Log In</button><br>
 			<!--<button value = "Google Popup" onclick = "popup(googleProvider)")></button><br>
 			<button value = "Facebook Popup" onclick = "popup(facebookProvider)")></button><br>-->
-			<button onclick = "firebase.auth().signInWithRedirect(googleProvider)">Google Redirect</button><br>
-			<button onclick = "firebase.auth().signInWithRedirect(facebookProvider)">Facebook Redirect</button><br>
+			<button onclick = "firebase.auth().signInWithRedirect(googleProvider); angular.element(document.getElementById('loginBox')).scope().setLogIn(true)">Google Redirect</button><br>
+			<button onclick = "firebase.auth().signInWithRedirect(facebookProvider); showOverlay();">Facebook Redirect</button><br>
+			<button onclick = "createAccount(document.getElementById('username').value, document.getElementById('password').value); showOverlay();">Create</button><br>
 			<!--<button onclick = "firebase.auth().signOut(); 
 				window.location = 'https://localhost/LFG/login.html';">Log Out</button><br>-->
-				<button onclick = "firebase.auth().signOut(); 
-				navigate('login.html');">Log Out</button><br>
-				<!--window.location = 'https://66.25.9.47/LFG/login.html';"-->
+			<!--<button onclick = "firebase.auth().signOut(); 
+			navigate('login.html'); showOverlay();">Log Out</button><br>-->
+			<!--window.location = 'https://66.25.9.47/LFG/login.html';"-->
 		</div>
-		
+		<div id = "loginOverlay">
+			<div class="loader"></div>
+		</div>
 
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
 		<script src="js/app.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+		<script src="js/AngularModule.js"></script>
 		<script>
-				function login(username, password){
-					firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
-					  // Handle Errors here.
-					  var errorCode = error.code;
-					  var errorMessage = error.message;
-					  
-					  window.alert(errorMessage);
+			function showOverlay()
+			{
+				document.getElementById("loginOverlay").style.display = "block";
+			}
+			function login(username, password){
+				firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
+				  // Handle Errors here.
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  
+				  window.alert(errorMessage);
+			});
+			}
+			function createAccount(username, password){
+				firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
+				  // Handle Errors here.
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  
+				  window.alert(errorMessage);
+				  // ...
 				});
+			}
+			firebase.auth().onAuthStateChanged(function(user) {
+				document.getElementById('loginOverlay').style.display = "none";
+			  if (user) {
+				// User is signed in.
+				//console.log("SIGNED IN", user);
+				var displayName = user.displayName;
+				var email = user.email;
+				var emailVerified = user.emailVerified;
+				var photoURL = user.photoURL;
+				var isAnonymous = user.isAnonymous;
+				var uid = user.uid;
+				var providerData = user.providerData;
+				//window.location = 'https://localhost/LFG/index.html';
+				//window.location = 'https://66.25.9.47/LFG/index.html';
+				navigate('index.html');
+				// ...
+			  } else {
+				// User is signed out.
+				console.log("SIGNED OUT");
+				while(!angular.element(document.getElementById('loginBox')))
+				{
+					console.log("DOESN'T EXIST");
 				}
-				function createAccount(username, password){
-					firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error) {
-					  // Handle Errors here.
-					  var errorCode = error.code;
-					  var errorMessage = error.message;
-					  
-					  window.alert(errorMessage);
-					  // ...
-					});
-				}
-				firebase.auth().onAuthStateChanged(function(user) {
-				  if (user) {
-					// User is signed in.
-					console.log("SIGNED IN", user);
-					var displayName = user.displayName;
-					var email = user.email;
-					var emailVerified = user.emailVerified;
-					var photoURL = user.photoURL;
-					var isAnonymous = user.isAnonymous;
-					var uid = user.uid;
-					var providerData = user.providerData;
-					//window.location = 'https://localhost/LFG/index.html';
-					//window.location = 'https://66.25.9.47/LFG/index.html';
-					navigate('index.html');
-					// ...
-				  } else {
-					// User is signed out.
-					console.log("SIGNED OUT");
-				  }
+				//angular.element(document.getElementById('loginBox')).scope().setLogIn(false);
+				document.getElementById('loginOverlay').style.display = "none";
+			  }
+			});
+			function popup(provider){
+				firebase.auth().signInWithPopup(provider).then(function(result) {
+				  // This gives you a Google Access Token. You can use it to access the Google API.
+				  var token = result.credential.accessToken;
+				  // The signed-in user info.
+				  var user = result.user;
+				  // ...
+				}).catch(function(error) {
+				  // Handle Errors here.
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  // The email of the user's account used.
+				  var email = error.email;
+				  // The firebase.auth.AuthCredential type that was used.
+				  var credential = error.credential;
+				  // ...
 				});
-				function popup(provider){
-					firebase.auth().signInWithPopup(provider).then(function(result) {
-					  // This gives you a Google Access Token. You can use it to access the Google API.
-					  var token = result.credential.accessToken;
-					  // The signed-in user info.
-					  var user = result.user;
-					  // ...
-					}).catch(function(error) {
-					  // Handle Errors here.
-					  var errorCode = error.code;
-					  var errorMessage = error.message;
-					  // The email of the user's account used.
-					  var email = error.email;
-					  // The firebase.auth.AuthCredential type that was used.
-					  var credential = error.credential;
-					  // ...
-					});
-				}
-			</script>
+			}
+		</script>
 	</body>
 </html>
