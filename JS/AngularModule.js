@@ -313,7 +313,8 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 									(function(i, doc) {	
 										item.addEventListener("click", function(){
 											$scope.clicked = i;
-											$window.location = "/LFG/index.html#/group?" + doc.id;
+											//$window.location = "/LFG/index.html#/group?" + doc.id;
+											navigate('index.html#/group?' +  doc.id);
 										});
 									})(counter, doc);
 
