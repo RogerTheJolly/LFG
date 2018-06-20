@@ -26,11 +26,6 @@ app.config(function($routeProvider)
         redirectTo: '/'
     });
 });
-/*app.factory('UserService', function() {
-    $sessionStorage.loggingIn = false;
-	
-	
-});*/
 
 app.controller('loginController', function($scope, $rootScope)
 {
@@ -186,6 +181,58 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 		});
 	};
 	
+	//Filter by My Groups
+	$scope.getMyGroups = function()
+	{
+		
+		//var UserID = Object.keys($scope.user)[0];
+		
+		//console.log("UserID", UserID);
+		var userID = firebase.auth().currentUser.uid;
+		
+		console.log(userID);
+		
+		//TODO: Merge this into a function
+		var items = document.getElementsByClassName('item');
+		var loopEnd = items.length;
+		
+		for(i = loopEnd; i > 0; i--)
+		{
+			items[i-1].remove();
+		}
+		
+		var docs = db.collection("groups").where("users." + userID, "==", true);
+		docs.get()
+			.then(function(querySnapshot) {
+				querySnapshot.forEach(function(doc) {
+					// doc.data() is never undefined for query doc snapshots
+					console.log(doc.id, " => ", doc.data());
+					
+					//TODO: Make this a function!
+									var item = document.createElement("div");
+									item.classList.add("item");
+									grid.appendChild(item);
+									
+									var image = doc.data().image.toString();
+									
+									(function(i, doc) {	
+										item.addEventListener("click", function(){
+											$scope.clicked = i;
+											//$window.location = "/LFG/index.html#/group?" + doc.id;
+											navigate('index.html#/group?' +  doc.id);
+										});
+									})(counter, doc);
+
+									image = image.replace('300', item.offsetWidth);
+									image = image.replace('200', item.offsetHeight);
+									item.style.backgroundImage = "url('" + image +"')";	
+				});
+			})
+			.catch(function(error) {
+				console.log("Error getting documents for user: ", error);
+			});
+		
+	};
 	// Run after view loaded.
 	var counter = 0;
 	$scope.loadGroups = function(index){
@@ -204,6 +251,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 					querySnapshot.forEach((doc) => {
 						//console.log(`${doc.id} => ${doc.data()}`);
 						
+						//TODO: Make this a function!
 						var item = document.createElement("div");
 						item.classList.add("item");
 						grid.appendChild(item);
@@ -304,6 +352,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 								
 								if(match)
 								{
+									//TODO: Make this a function!
 									var item = document.createElement("div");
 									item.classList.add("item");
 									grid.appendChild(item);

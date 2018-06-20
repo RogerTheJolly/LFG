@@ -105,10 +105,10 @@
 					<span id = "filter">Filter/Create</span>
                 </li>
                 <li>
-                    <a href="#">Overview</a>
+                    <span id = "myGroups">My Groups</span>
                 </li>
                 <li>
-                    <a href="#">Events</a>
+                    <a href="#">Messages</a>
                 </li>
                 <li>
                     <a href="#">About</a>
@@ -120,7 +120,6 @@
                     <a href="#" id = "contact">Contact</a>
                 </li>
 				<li>
-                    <!--<a href="#" onclick = "firebase.auth().signOut(); window.location = 'https://localhost/LFG/login.html';">Log Out</a>-->
                     <a href="#" onclick = "firebase.auth().signOut(); navigate('login.html');">Log Out</a>
                 </li>
             </ul>
@@ -146,11 +145,10 @@
 	firebase.auth().onAuthStateChanged(function(user) {
 	  if (!user) {
 		console.log("SIGNED OUT");
-		//window.location = 'https://localhost/LFG/login.html';
-		//window.location = 'https://66.25.9.47/LFG/login.html';
 		navigate('login.html');
 	  }
 	  else{
+	  console.log(user.uid);
 		angular.element(document.getElementById('ngView')).scope().setUser(user.uid);
 		document.getElementsByTagName("BODY")[0].style.display = "block";
 	}
@@ -162,6 +160,9 @@
     });
 	$("#filter").click(function(e){
 		document.getElementById('filterPopUp').style.display = "block";
+	});
+	$("#myGroups").click(function(e){
+		angular.element(document.getElementById('ngView')).scope().getMyGroups();
 	});
 	$("#closePopUp").click(function(e){
 		document.getElementById('filterPopUp').style.display = "none";
