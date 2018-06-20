@@ -99,7 +99,7 @@
 		
             <ul class="sidebar-nav">
                 <li>
-                    <a href="#/">Home</a>
+                    <span id = "home">Home</span>
                 </li>
                 <li>
 					<span id = "filter">Filter/Create</span>
@@ -108,7 +108,7 @@
                     <span id = "myGroups">My Groups</span>
                 </li>
                 <li>
-                    <a href="#">Messages</a>
+                    <span id = "messages">Messages</span>
                 </li>
                 <li>
                     <a href="#">About</a>
@@ -158,6 +158,9 @@
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+	$("#home").click(function(e){
+		angular.element(document.getElementById('ngView')).scope().loadGroups();
+	});
 	$("#filter").click(function(e){
 		document.getElementById('filterPopUp').style.display = "block";
 	});

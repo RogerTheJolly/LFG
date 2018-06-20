@@ -233,6 +233,15 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 		//{
 			console.log($rootScope.optionValues);
 			
+			//TODO: Merge this into a function
+			var items = document.getElementsByClassName('item');
+			var loopEnd = items.length;
+			
+			for(i = loopEnd; i > 0; i--)
+			{
+				items[i-1].remove();
+			}
+			
 			var grid = document.getElementById('grid');
 			
 			console.log("FIRST LOAD");
