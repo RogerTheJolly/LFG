@@ -47,7 +47,6 @@ app.controller('loginController', function($scope, $rootScope)
 });
 app.controller('HomeController', function($scope, $location, $window, $rootScope)
 {
-	$scope.runJS = true;
 	var firstLoad = true;
 	
 	//TODO: make this global
@@ -182,12 +181,8 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 	};
 	
 	//Filter by My Groups
-	$scope.getMyGroups = function()
+	$scope.loadMyGroups = function()
 	{
-		
-		//var UserID = Object.keys($scope.user)[0];
-		
-		//console.log("UserID", UserID);
 		var userID = firebase.auth().currentUser.uid;
 		
 		console.log(userID);
@@ -209,23 +204,22 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 					console.log(doc.id, " => ", doc.data());
 					
 					//TODO: Make this a function!
-									var item = document.createElement("div");
-									item.classList.add("item");
-									grid.appendChild(item);
-									
-									var image = doc.data().image.toString();
-									
-									(function(i, doc) {	
-										item.addEventListener("click", function(){
-											$scope.clicked = i;
-											//$window.location = "/LFG/index.html#/group?" + doc.id;
-											navigate('index.html#/group?' +  doc.id);
-										});
-									})(counter, doc);
+					var item = document.createElement("div");
+					item.classList.add("item");
+					grid.appendChild(item);
+					
+					var image = doc.data().image.toString();
+					
+					(function(i, doc) {	
+						item.addEventListener("click", function(){
+							$scope.clicked = i;
+							navigate('index.html#/group?' +  doc.id);
+						});
+					})(counter, doc);
 
-									image = image.replace('300', item.offsetWidth);
-									image = image.replace('200', item.offsetHeight);
-									item.style.backgroundImage = "url('" + image +"')";	
+					image = image.replace('300', item.offsetWidth);
+					image = image.replace('200', item.offsetHeight);
+					item.style.backgroundImage = "url('" + image +"')";	
 				});
 			})
 			.catch(function(error) {
@@ -236,152 +230,150 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 	// Run after view loaded.
 	var counter = 0;
 	$scope.loadGroups = function(index){
-		//if($scope.runJS)
 		//{
 			console.log($rootScope.optionValues);
 			
 			var grid = document.getElementById('grid');
 			
-			//First load
-			if(firstLoad)
-			{
-				console.log("FIRST LOAD");
-				//Get the Groups from the DB
-				db.collection("groups").get().then((querySnapshot) => {
-					querySnapshot.forEach((doc) => {
-						//console.log(`${doc.id} => ${doc.data()}`);
-						
-						//TODO: Make this a function!
-						var item = document.createElement("div");
-						item.classList.add("item");
-						grid.appendChild(item);
-						
-						var title = document.createElement("div");
-						title.classList.add("groupTitle");
-						
-						if(doc.data().title.length > 0)
-							title.innerHTML = doc.data().title + ": " + doc.data().game;
-						else
-							title.innerHTML = doc.data().game;
-						
-						var image = doc.data().image.toString();
-						
-						(function(i, doc) {	
-							item.addEventListener("click", function(){
-								$scope.clicked = i;
-								//$window.location = "/LFG/index.html#/group?" + doc.id;
-								navigate('index.html#/group?' +  doc.id);
-							});
-						})(counter, doc);
-
-						image = image.replace('300', item.offsetWidth);
-						image = image.replace('200', item.offsetHeight);
-						item.style.backgroundImage = "url('" + image +"')";
-						item.appendChild(title);
-						
-						counter++;
-					});
-				});
-				$scope.runJS = false;
-			//}
-			firstLoad = false;
-			}
-			//Filter loads
-			if(!firstLoad)
-			{
-				var items = document.getElementsByClassName('item');
-				var loopEnd = items.length;
-				
-				for(i = loopEnd; i > 0; i--)
-				{
-					items[i-1].remove();
-				}
-				if($rootScope.optionValues)
-				{
-					var docs = db.collection("groups").where("game", "==", $rootScope.optionValues.game)
-						docs.get()
-						.then(function(querySnapshot) {
-							querySnapshot.forEach(function(doc) {
-								// doc.data() is never undefined for query doc snapshots
-								//console.log(doc.id, " => ", doc.data());
-								
-								var counter = 0;
-								var match = true;
-								for(var key in $rootScope.optionValues)
-								{
-									//console.log("key " + key);
-									if(counter == 0)
-									{
-										counter++;
-										continue;
-									}
-									else{
-										var data = doc.data().properties;
-										//console.log(key);
-										var keySplit = key.split(".");
-										//console.log(keySplit);
-										
-										if(keySplit.length == 2)
-										{
-											if(data[keySplit[0]][keySplit[1]] != $rootScope.optionValues[key])
-											{
-												match = false;
-												counter++;
-											}
-											else
-											{
-												//console.log(key + " MATCHED")
-											}
-										}
-										else if(keySplit.length == 3)
-										{
-											if(data[keySplit[0]][keySplit[1]][keySplit[2]] != $rootScope.optionValues[key])
-											{
-												match = false;
-												counter++;
-											}
-											else
-											{
-												//console.log(key + " MATCHED")
-											}
-										}
-									}
-									counter++;
-								}
-								console.log("MATCH: " + match);
-								
-								if(match)
-								{
-									//TODO: Make this a function!
-									var item = document.createElement("div");
-									item.classList.add("item");
-									grid.appendChild(item);
-									
-									var image = doc.data().image.toString();
-									
-									(function(i, doc) {	
-										item.addEventListener("click", function(){
-											$scope.clicked = i;
-											//$window.location = "/LFG/index.html#/group?" + doc.id;
-											navigate('index.html#/group?' +  doc.id);
-										});
-									})(counter, doc);
-
-									image = image.replace('300', item.offsetWidth);
-									image = image.replace('200', item.offsetHeight);
-									item.style.backgroundImage = "url('" + image +"')";	
-								}
-								
-							});
-						})
-						.catch(function(error) {
-							console.log("Error getting documents: ", error);
+			console.log("FIRST LOAD");
+			//Get the Groups from the DB
+			db.collection("groups").get().then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					//console.log(`${doc.id} => ${doc.data()}`);
+					
+					//TODO: Make this a function!
+					var item = document.createElement("div");
+					item.classList.add("item");
+					grid.appendChild(item);
+					
+					var title = document.createElement("div");
+					title.classList.add("groupTitle");
+					
+					if(doc.data().title.length > 0)
+						title.innerHTML = doc.data().title + ": " + doc.data().game;
+					else
+						title.innerHTML = doc.data().game;
+					
+					var image = doc.data().image.toString();
+					
+					(function(i, doc) {	
+						item.addEventListener("click", function(){
+							$scope.clicked = i;
+							//$window.location = "/LFG/index.html#/group?" + doc.id;
+							navigate('index.html#/group?' +  doc.id);
 						});
-				}
-			}			
+					})(counter, doc);
+
+					image = image.replace('300', item.offsetWidth);
+					image = image.replace('200', item.offsetHeight);
+					item.style.backgroundImage = "url('" + image +"')";
+					item.appendChild(title);
+					
+					counter++;
+				});
+			});
 	};
 	
 	$scope.loadGroups();
+	
+	
+	$scope.loadGroupsFilter = function(index){
+		//{
+			console.log($rootScope.optionValues);
+			
+			var grid = document.getElementById('grid');
+			//Filter loads
+			var items = document.getElementsByClassName('item');
+			var loopEnd = items.length;
+			
+			for(i = loopEnd; i > 0; i--)
+			{
+				items[i-1].remove();
+			}
+			if($rootScope.optionValues)
+			{
+				var docs = db.collection("groups").where("game", "==", $rootScope.optionValues.game)
+					docs.get()
+					.then(function(querySnapshot) {
+						querySnapshot.forEach(function(doc) {
+							// doc.data() is never undefined for query doc snapshots
+							//console.log(doc.id, " => ", doc.data());
+							
+							var counter = 0;
+							var match = true;
+							for(var key in $rootScope.optionValues)
+							{
+								//console.log("key " + key);
+								if(counter == 0)
+								{
+									counter++;
+									continue;
+								}
+								else{
+									var data = doc.data().properties;
+									//console.log(key);
+									var keySplit = key.split(".");
+									//console.log(keySplit);
+									
+									if(keySplit.length == 2)
+									{
+										if(data[keySplit[0]][keySplit[1]] != $rootScope.optionValues[key])
+										{
+											match = false;
+											counter++;
+										}
+										else
+										{
+											//console.log(key + " MATCHED")
+										}
+									}
+									else if(keySplit.length == 3)
+									{
+										if(data[keySplit[0]][keySplit[1]][keySplit[2]] != $rootScope.optionValues[key])
+										{
+											match = false;
+											counter++;
+										}
+										else
+										{
+											//console.log(key + " MATCHED")
+										}
+									}
+								}
+								counter++;
+							}
+							console.log("MATCH: " + match);
+							
+							if(match)
+							{
+								//TODO: Make this a function!
+								var item = document.createElement("div");
+								item.classList.add("item");
+								grid.appendChild(item);
+								
+								var image = doc.data().image.toString();
+								
+								(function(i, doc) {	
+									item.addEventListener("click", function(){
+										$scope.clicked = i;
+										//$window.location = "/LFG/index.html#/group?" + doc.id;
+										navigate('index.html#/group?' +  doc.id);
+									});
+								})(counter, doc);
+
+								image = image.replace('300', item.offsetWidth);
+								image = image.replace('200', item.offsetHeight);
+								item.style.backgroundImage = "url('" + image +"')";	
+							}
+							
+						});
+					})
+					.catch(function(error) {
+						console.log("Error getting documents: ", error);
+					});
+			}
+					
+	};
 	
 });
 
