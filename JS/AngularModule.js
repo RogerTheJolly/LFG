@@ -27,7 +27,7 @@ app.config(function($routeProvider)
     });
 });
 
-app.controller('loginController', function($scope, $rootScope)
+app.controller('loginController', function($scope, $rootScope, StoreService)
 {
 	//This will trigger the loader div
 	$scope.setLogIn = function(bool){
@@ -45,7 +45,7 @@ app.controller('loginController', function($scope, $rootScope)
 		document.getElementById('loginOverlay').style.display = "none";
 	}
 });
-app.controller('HomeController', function($scope, $location, $window, $rootScope)
+app.controller('HomeController', function($scope, $location, $window, $rootScope, StoreService)
 {
 	var firstLoad = true;
 	
@@ -195,7 +195,6 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 		{
 			items[i-1].remove();
 		}
-		
 		var docs = db.collection("groups").where("users." + userID, "==", true);
 		docs.get()
 			.then(function(querySnapshot) {
@@ -232,58 +231,72 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 	$scope.loadGroups = function(index){
 		//{
 			console.log($rootScope.optionValues);
+			var loadedGroups = StoreService.getLoadedGroups();
 			
-			//TODO: Merge this into a function
-			var items = document.getElementsByClassName('item');
-			var loopEnd = items.length;
-			
-			for(i = loopEnd; i > 0; i--)
+			if(typeof loadedGroups != 'undefined')
 			{
-				items[i-1].remove();
+				StoreService.restoreLoadedGroups();
 			}
-			
-			var grid = document.getElementById('grid');
-			
-			console.log("FIRST LOAD");
-			//Get the Groups from the DB
-			db.collection("groups").get().then((querySnapshot) => {
-				querySnapshot.forEach((doc) => {
-					//console.log(`${doc.id} => ${doc.data()}`);
-					
-					//TODO: Make this a function!
-					var item = document.createElement("div");
-					item.classList.add("item");
-					grid.appendChild(item);
-					
-					var title = document.createElement("div");
-					title.classList.add("groupTitle");
-					
-					if(doc.data().title.length > 0)
-						title.innerHTML = doc.data().title + ": " + doc.data().game;
-					else
-						title.innerHTML = doc.data().game;
-					
-					var image = doc.data().image.toString();
-					
-					(function(i, doc) {	
-						item.addEventListener("click", function(){
-							$scope.clicked = i;
-							//$window.location = "/LFG/index.html#/group?" + doc.id;
-							navigate('index.html#/group?' +  doc.id);
-						});
-					})(counter, doc);
+			else
+			{
+				//TODO: Merge this into a function
+				var items = document.getElementsByClassName('item');
+				var loopEnd = items.length;
+				
+				for(i = loopEnd; i > 0; i--)
+				{
+					items[i-1].remove();
+				}
+				
+				var grid = document.getElementById('grid');
+				
+				console.log("FIRST LOAD");
+				
+				loadedGroups = [];
+				//Get the Groups from the DB
+				db.collection("groups").get().then((querySnapshot) => {
+					querySnapshot.forEach((doc) => {
+						//console.log(`${doc.id} => ${doc.data()}`);
+						
+						//TODO: Make this a function!
+						var item = document.createElement("div");
+						item.classList.add("item");
+						grid.appendChild(item);
+						
+						var title = document.createElement("div");
+						title.classList.add("groupTitle");
+						
+						if(doc.data().title.length > 0)
+							title.innerHTML = doc.data().title + ": " + doc.data().game;
+						else
+							title.innerHTML = doc.data().game;
+						
+						var image = doc.data().image.toString();
+						
+						(function(i, doc) {	
+							item.addEventListener("click", function(){
+								$scope.clicked = i;
+								//$window.location = "/LFG/index.html#/group?" + doc.id;
+								navigate('index.html#/group?' +  doc.id);
+							});
+						})(counter, doc);
 
-					image = image.replace('300', item.offsetWidth);
-					image = image.replace('200', item.offsetHeight);
-					item.style.backgroundImage = "url('" + image +"')";
-					item.appendChild(title);
-					
-					counter++;
+						image = image.replace('300', item.offsetWidth);
+						image = image.replace('200', item.offsetHeight);
+						item.style.backgroundImage = "url('" + image +"')";
+						item.appendChild(title);
+						loadedGroups.push(item);
+						
+						counter++;
+					});
 				});
-			});
+				//console.log(loadedGroups);
+				StoreService.saveLoadedGroups(loadedGroups);
+			}
 	};
 	
-	$scope.loadGroups();
+	if(document.getElementsByClassName('item').length == 0) 
+		$scope.loadGroups();
 	
 	
 	$scope.loadGroupsFilter = function(index){
@@ -386,7 +399,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 	
 });
 
-app.controller('GroupController', function($scope, $window)
+app.controller('GroupController', function($scope, $window, StoreService)
 {
 	//TODO: make this global
 	$scope.setUser = function(user){
@@ -439,13 +452,13 @@ app.controller('GroupController', function($scope, $window)
 	}
 	
 	$scope.getProperty = function(path){
-		console.log(path, $scope.groupProperties);
+		//console.log(path, $scope.groupProperties);
 		path = path.split(".");
 		return($scope.groupProperties[path[0]][path[1]]);
 	}	
 });
 
-app.controller('popUpController', function($scope, $rootScope)
+app.controller('popUpController', function($scope, $rootScope, StoreService)
 {
 	var gamesArray = [];
 	db.collection("game_list").get().then((querySnapshot) => {
@@ -519,4 +532,28 @@ app.controller('popUpController', function($scope, $rootScope)
 	$scope.aboutChanged = function(value){
 		$rootScope.about = value;
 	}
+});
+app.service('StoreService',function(){
+
+	var loadedGroups={};
+	this.saveLoadedGroups=function(groups){        
+		this.loadedGroups=groups;
+		console.log(this.loadedGroups);
+	};
+	this.restoreLoadedGroups=function(){
+		if(this.loadedGroups)
+		{
+			for(i = 0; i < this.loadedGroups.length; i++)
+			{
+				grid.appendChild(this.loadedGroups[i]);
+			}
+			console.log("RESTORING");
+		}
+	};
+	this.getLoadedGroups=function(){
+		return this.loadedGroups;  
+	};
+	this.clearLoadedGroups=function(){
+		this.loadedGroups = {};
+	};
 });
