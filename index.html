@@ -159,7 +159,8 @@
         $("#wrapper").toggleClass("toggled");
     });
 	$("#home").click(function(e){
-		angular.element(document.getElementById('ngView')).scope().loadGroups();
+		angular.element(document.getElementById('ngView')).scope().clearLoadedGroups();
+		//angular.element(document.getElementById('ngView')).scope().loadGroups();
 	});
 	$("#filter").click(function(e){
 		document.getElementById('filterPopUp').style.display = "block";

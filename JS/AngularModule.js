@@ -55,6 +55,10 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 		$scope.user[user] = true;
 	};
 	
+	$scope.clearLoadedGroups = function(){
+		StoreService.clearLoadedGroups();
+		$scope.loadGroups();
+	};
 	$scope.createGroup = function(){
 		console.log("CREATING GROUP", $rootScope.optionValues);
 		
@@ -195,6 +199,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 		{
 			items[i-1].remove();
 		}
+		var loadedGroups = [];
 		var docs = db.collection("groups").where("users." + userID, "==", true);
 		docs.get()
 			.then(function(querySnapshot) {
@@ -219,21 +224,24 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 					image = image.replace('300', item.offsetWidth);
 					image = image.replace('200', item.offsetHeight);
 					item.style.backgroundImage = "url('" + image +"')";	
+					loadedGroups.push(item);
 				});
 			})
 			.catch(function(error) {
 				console.log("Error getting documents for user: ", error);
 			});
+			StoreService.saveLoadedGroups(loadedGroups);
 		
 	};
 	// Run after view loaded.
 	var counter = 0;
 	$scope.loadGroups = function(index){
 		//{
-			console.log($rootScope.optionValues);
+			//console.log($rootScope.optionValues);
 			var loadedGroups = StoreService.getLoadedGroups();
 			
-			if(typeof loadedGroups != 'undefined')
+			//If there are previously loaded groups, restore those instead of doing a full load
+			if(typeof loadedGroups != 'undefined' || loadedGroups == {})
 			{
 				StoreService.restoreLoadedGroups();
 			}
@@ -314,6 +322,8 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 			}
 			if($rootScope.optionValues)
 			{
+				var loadedGroups = [];
+				StoreService.clearLoadedGroups();
 				var docs = db.collection("groups").where("game", "==", $rootScope.optionValues.game)
 					docs.get()
 					.then(function(querySnapshot) {
@@ -386,6 +396,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 								image = image.replace('300', item.offsetWidth);
 								image = image.replace('200', item.offsetHeight);
 								item.style.backgroundImage = "url('" + image +"')";	
+								loadedGroups.push(item);
 							}
 							
 						});
@@ -393,6 +404,7 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 					.catch(function(error) {
 						console.log("Error getting documents: ", error);
 					});
+					StoreService.saveLoadedGroups(loadedGroups);
 			}
 					
 	};
@@ -554,6 +566,6 @@ app.service('StoreService',function(){
 		return this.loadedGroups;  
 	};
 	this.clearLoadedGroups=function(){
-		this.loadedGroups = {};
+		this.loadedGroups = undefined;
 	};
 });
