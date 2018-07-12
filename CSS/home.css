@@ -32,6 +32,57 @@ button{
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
 }
+#messageList{
+	height: 40px;
+	overflow-y: hidden;
+	transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+/*.messageNotToggled{
+	height: 40px;
+	overflow-y: hidden;
+	transition: all 0.3s ease;
+}
+.messageToggled{
+	height: 500px;
+	max-height: 1000px;
+	overflow-y: hidden;
+	transition: all 0.3s ease;
+}*/
+/*.messageCount{
+	width: 30px;
+	height: 30px;
+	float: right;
+	display: inline-block;
+	background-color: #EEE;
+	margin-top: 5px;
+	margin-right: 5px;
+	color: red;
+}*/
+.messageCount{
+	width: 30px;
+	float: right;
+	color: red;
+	text-indent: 0px !important;
+	text-align: center;
+	font-size: 16px;
+	line-height: 40px;
+	z-index: 500;
+}
+.messageGroup{
+	//text-indent: 25px !important;
+	width: 170px;
+	float: left;
+	overflow-x: hidden;
+}
 #gameSearchautocomplete-list{
 	max-height: 500px;
 	overflow-y: scroll;
@@ -264,7 +315,7 @@ button:hover{
 .sidebar-nav {
   position: absolute;
   top: 50px;
-  left: 15px;
+  //left: 15px;
   width: 200px;
   margin: 0;
   padding: 0;

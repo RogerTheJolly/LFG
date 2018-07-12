@@ -184,6 +184,35 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 		});
 	};
 	
+	/*$scope.getMessages = function()
+	{
+		var docs = db.collection("groups").where("users." + userID, "==", true);
+		docs.get()
+			.then(function(querySnapshot) {
+					//TODO: Make this a function!
+					var item = document.createElement("div");
+					item.classList.add("message");
+					grid.appendChild(item);
+					
+					var image = doc.data().image.toString();
+					
+					(function(i, doc) {	
+						item.addEventListener("click", function(){
+							$scope.clicked = i;
+							navigate('index.html#/group?' +  doc.id);
+						});
+					})(counter, doc);
+
+					image = image.replace('300', item.offsetWidth);
+					image = image.replace('200', item.offsetHeight);
+					item.style.backgroundImage = "url('" + image +"')";	
+					loadedGroups.push(item);
+				});
+			})
+			.catch(function(error) {
+				console.log("Error getting documents for user: ", error);
+			});
+	};*/
 	//Filter by My Groups
 	$scope.loadMyGroups = function()
 	{

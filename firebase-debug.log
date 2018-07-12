@@ -141,3 +141,201 @@
 [info] 
 [info] Project Console: https://console.firebase.google.com/project/looking-for-group-26a4c/overview
 [info] Hosting URL: https://looking-for-group-26a4c.firebaseapp.com
+[debug] [2018-07-05T21:42:28.175Z] ----------------------------------------------------------------------
+[debug] [2018-07-05T21:42:28.176Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-07-05T21:42:28.176Z] CLI Version:   3.18.5
+[debug] [2018-07-05T21:42:28.176Z] Platform:      linux
+[debug] [2018-07-05T21:42:28.176Z] Node Version:  v10.2.0
+[debug] [2018-07-05T21:42:28.176Z] Time:          Thu Jul 05 2018 16:42:28 GMT-0500 (CDT)
+[debug] [2018-07-05T21:42:28.176Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-05T21:42:28.188Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-05T21:42:28.188Z] > authorizing via signed-in user
+[debug] [2018-07-05T21:42:28.190Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-07-05T21:42:28.190Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/EYYXo6aHWj7mUSXW8KMaOmSBRf5gf4MgSYslhqvvzd4',
+  client_id:
+   '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope:
+   'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Jul 05 2018 16:42:28 GMT-0500 (CDT)
+[debug] [2018-07-05T21:42:28.387Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-05T21:42:28.403Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/looking-for-group-26a4c  
+  
+ Thu Jul 05 2018 16:42:28 GMT-0500 (CDT)
+[debug] [2018-07-05T21:42:28.935Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-05T21:42:28.937Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/looking-for-group-26a4c/tokens  
+  
+ Thu Jul 05 2018 16:42:28 GMT-0500 (CDT)
+[debug] [2018-07-05T21:42:29.514Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'looking-for-group-26a4c'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing Public directory for upload...
+[debug] [2018-07-05T21:42:31.300Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/looking-for-group-26a4c/uploads/-LGgONubcFRj_JuER7Ym?fileCount=256&message=  
+  
+ Thu Jul 05 2018 16:42:31 GMT-0500 (CDT)
+[debug] [2018-07-05T21:42:34.877Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-05T21:42:34.878Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 256 files uploaded successfully
+[debug] [2018-07-05T21:42:36.870Z] [hosting] deploy completed after 7108ms
+[debug] [2018-07-05T21:42:36.984Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/looking-for-group-26a4c/releases  
+ { hosting:
+   { public: 'Public',
+     ignore: [ 'firebase.json', '**/.*', '**/node_modules/**' ],
+     version: '-LGgONubcFRj_JuER7Ym',
+     prefix: '-LGgONubcFRj_JuER7Ym/',
+     manifest: [] } } 
+ Thu Jul 05 2018 16:42:36 GMT-0500 (CDT)
+[debug] [2018-07-05T21:42:37.958Z] <<< HTTP RESPONSE 200
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/looking-for-group-26a4c/overview
+[info] Hosting URL: https://looking-for-group-26a4c.firebaseapp.com
+[debug] [2018-07-05T21:45:01.331Z] ----------------------------------------------------------------------
+[debug] [2018-07-05T21:45:01.332Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-07-05T21:45:01.332Z] CLI Version:   3.18.5
+[debug] [2018-07-05T21:45:01.332Z] Platform:      linux
+[debug] [2018-07-05T21:45:01.333Z] Node Version:  v10.2.0
+[debug] [2018-07-05T21:45:01.333Z] Time:          Thu Jul 05 2018 16:45:01 GMT-0500 (CDT)
+[debug] [2018-07-05T21:45:01.333Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-05T21:45:01.339Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-05T21:45:01.339Z] > authorizing via signed-in user
+[debug] [2018-07-05T21:45:01.341Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/looking-for-group-26a4c  
+  
+ Thu Jul 05 2018 16:45:01 GMT-0500 (CDT)
+[debug] [2018-07-05T21:45:01.682Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-05T21:45:01.685Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/looking-for-group-26a4c/tokens  
+  
+ Thu Jul 05 2018 16:45:01 GMT-0500 (CDT)
+[debug] [2018-07-05T21:45:02.082Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'looking-for-group-26a4c'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing Public directory for upload...
+[debug] [2018-07-05T21:45:02.910Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/looking-for-group-26a4c/uploads/-LGgOy7dON2tCfIt8nxB?fileCount=256&message=  
+  
+ Thu Jul 05 2018 16:45:02 GMT-0500 (CDT)
+[debug] [2018-07-05T21:45:06.567Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-05T21:45:06.567Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 256 files uploaded successfully
+[debug] [2018-07-05T21:45:08.055Z] [hosting] deploy completed after 5776ms
+[debug] [2018-07-05T21:45:08.171Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/looking-for-group-26a4c/releases  
+ { hosting:
+   { public: 'Public',
+     ignore: [ 'firebase.json', '**/.*', '**/node_modules/**' ],
+     version: '-LGgOy7dON2tCfIt8nxB',
+     prefix: '-LGgOy7dON2tCfIt8nxB/',
+     manifest: [] } } 
+ Thu Jul 05 2018 16:45:08 GMT-0500 (CDT)
+[debug] [2018-07-05T21:45:09.236Z] <<< HTTP RESPONSE 200
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/looking-for-group-26a4c/overview
+[info] Hosting URL: https://looking-for-group-26a4c.firebaseapp.com
+[debug] [2018-07-12T01:36:23.503Z] ----------------------------------------------------------------------
+[debug] [2018-07-12T01:36:23.510Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-07-12T01:36:23.510Z] CLI Version:   3.18.5
+[debug] [2018-07-12T01:36:23.510Z] Platform:      linux
+[debug] [2018-07-12T01:36:23.510Z] Node Version:  v10.2.0
+[debug] [2018-07-12T01:36:23.510Z] Time:          Wed Jul 11 2018 20:36:23 GMT-0500 (CDT)
+[debug] [2018-07-12T01:36:23.510Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-12T01:36:23.521Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-12T01:36:23.521Z] > authorizing via signed-in user
+[debug] [2018-07-12T01:36:23.522Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-07-12T01:36:23.522Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/EYYXo6aHWj7mUSXW8KMaOmSBRf5gf4MgSYslhqvvzd4',
+  client_id:
+   '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope:
+   'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Jul 11 2018 20:36:23 GMT-0500 (CDT)
+[debug] [2018-07-12T01:36:23.731Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-12T01:36:23.746Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/looking-for-group-26a4c  
+  
+ Wed Jul 11 2018 20:36:23 GMT-0500 (CDT)
+[debug] [2018-07-12T01:36:24.267Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-12T01:36:24.269Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/looking-for-group-26a4c/tokens  
+  
+ Wed Jul 11 2018 20:36:24 GMT-0500 (CDT)
+[debug] [2018-07-12T01:36:24.807Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'looking-for-group-26a4c'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing Public directory for upload...
+[debug] [2018-07-12T01:36:27.482Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/looking-for-group-26a4c/uploads/-LHB7T7fiUcKuXM--EWL?fileCount=256&message=  
+  
+ Wed Jul 11 2018 20:36:27 GMT-0500 (CDT)
+[debug] [2018-07-12T01:36:31.660Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-12T01:36:31.660Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 256 files uploaded successfully
+[debug] [2018-07-12T01:36:32.326Z] [hosting] deploy completed after 7170ms
+[debug] [2018-07-12T01:36:32.459Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/looking-for-group-26a4c/releases  
+ { hosting:
+   { public: 'Public',
+     ignore: [ 'firebase.json', '**/.*', '**/node_modules/**' ],
+     version: '-LHB7T7fiUcKuXM--EWL',
+     prefix: '-LHB7T7fiUcKuXM--EWL/',
+     manifest: [] } } 
+ Wed Jul 11 2018 20:36:32 GMT-0500 (CDT)
+[debug] [2018-07-12T01:36:33.455Z] <<< HTTP RESPONSE 200
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/looking-for-group-26a4c/overview
+[info] Hosting URL: https://looking-for-group-26a4c.firebaseapp.com
+[debug] [2018-07-12T01:48:48.088Z] ----------------------------------------------------------------------
+[debug] [2018-07-12T01:48:48.089Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-07-12T01:48:48.089Z] CLI Version:   3.18.5
+[debug] [2018-07-12T01:48:48.090Z] Platform:      linux
+[debug] [2018-07-12T01:48:48.090Z] Node Version:  v10.2.0
+[debug] [2018-07-12T01:48:48.090Z] Time:          Wed Jul 11 2018 20:48:48 GMT-0500 (CDT)
+[debug] [2018-07-12T01:48:48.090Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-12T01:48:48.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-12T01:48:48.096Z] > authorizing via signed-in user
+[debug] [2018-07-12T01:48:48.098Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/looking-for-group-26a4c  
+  
+ Wed Jul 11 2018 20:48:48 GMT-0500 (CDT)
+[debug] [2018-07-12T01:48:48.643Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-12T01:48:48.646Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/looking-for-group-26a4c/tokens  
+  
+ Wed Jul 11 2018 20:48:48 GMT-0500 (CDT)
+[debug] [2018-07-12T01:48:48.999Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'looking-for-group-26a4c'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing Public directory for upload...
+[debug] [2018-07-12T01:48:50.063Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/looking-for-group-26a4c/uploads/-LHBAIiyAyghbY9hcsO3?fileCount=256&message=  
+  
+ Wed Jul 11 2018 20:48:50 GMT-0500 (CDT)
+[debug] [2018-07-12T01:48:54.329Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-12T01:48:54.329Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 256 files uploaded successfully
+[debug] [2018-07-12T01:48:55.093Z] [hosting] deploy completed after 5742ms
+[debug] [2018-07-12T01:48:55.211Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/looking-for-group-26a4c/releases  
+ { hosting:
+   { public: 'Public',
+     ignore: [ 'firebase.json', '**/.*', '**/node_modules/**' ],
+     version: '-LHBAIiyAyghbY9hcsO3',
+     prefix: '-LHBAIiyAyghbY9hcsO3/',
+     manifest: [] } } 
+ Wed Jul 11 2018 20:48:55 GMT-0500 (CDT)
+[debug] [2018-07-12T01:48:56.220Z] <<< HTTP RESPONSE 200
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/looking-for-group-26a4c/overview
+[info] Hosting URL: https://looking-for-group-26a4c.firebaseapp.com
