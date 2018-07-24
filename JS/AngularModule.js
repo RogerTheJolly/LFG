@@ -249,10 +249,19 @@ app.controller('HomeController', function($scope, $location, $window, $rootScope
 							navigate('index.html#/group?' +  doc.id);
 						});
 					})(counter, doc);
+					
+					var title = document.createElement("div");
+						title.classList.add("groupTitle");
+						
+						if(doc.data().title.length > 0)
+							title.innerHTML = doc.data().title + ": " + doc.data().game;
+						else
+							title.innerHTML = doc.data().game;
 
 					image = image.replace('300', item.offsetWidth);
 					image = image.replace('200', item.offsetHeight);
 					item.style.backgroundImage = "url('" + image +"')";	
+					item.appendChild(title);
 					loadedGroups.push(item);
 				});
 			})
