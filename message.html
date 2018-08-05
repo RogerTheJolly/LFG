@@ -1,0 +1,82 @@
+<div id = "groupTitle">
+{{groupName}}
+</div>
+<!--<div id = "groupGrid">
+	<div id = "groupLeft">
+		<div id = "groupImgParent">
+			<img src = {{groupImage}}>
+		</div>
+		<br><br>
+		{{groupDesc}}
+	</div>
+	<div id = "groupRight">
+		<ul>
+			<li ng-repeat = "property in properties" ng-init="type = property.type; key = property.key">
+				{{key}}
+				<ul>
+					<li ng-repeat = "value in property.values" ng-init = "path = key + '.' + value">
+						{{value}}
+						
+						<span ng-if = "type == 'haveNeed'">
+							{{result = getProperty(path);""}}
+							<ul>
+								<li>{{"Have: " + result.have}}</li>
+								<li>{{"Need: " + result.need}}</li>
+							</ul>
+						</span>
+						
+						<span ng-if = "type == 'checkboxes'">
+							{{": "}}
+							{{result = getProperty(path)}}
+						</span>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+	<br>
+	<button onclick = "navigate('message.html')">Send a Message</button><br>-->
+	
+<div id = "chatBox">
+
+</div>
+<!--<div id = "messageBox">
+	<textarea class = "autoExpand" type = "textarea" rows = '2' placeholder = 'Send a message'></textarea>
+</div>-->
+	<textarea class = "autoExpand" type = "textarea" rows='3' data-min-rows='3' placeholder = 'Send a message'></textarea>
+
+<script>
+	// Applied globally on all textareas with the "autoExpand" class
+var textarea = document.getElementsByClassName("autoExpand")[0];
+console.log("TEST");
+textarea.addEventListener('keydown', autosize);
+
+function autosize(){
+console.log("Auto expand");
+  var el = this;
+  setTimeout(function(){
+    el.style.cssText = 'height:auto; padding:0';
+    // for box-sizing other than "content-box" use:
+    // el.style.cssText = '-moz-box-sizing:content-box';
+    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+  },0);
+}
+/*$(textarea)
+    .on('focus.autoExpand', 'textarea.autoExpand', function(){
+		console.log("Auto expand");
+        var savedValue = this.value;
+        this.value = '';
+        this.baseScrollHeight = this.scrollHeight;
+        this.value = savedValue;
+		
+		//messageBox.style.height = this.height;
+    })
+    .on('input.autoExpand', 'textarea.autoExpand', function(){
+		console.log("Auto expand");
+        var minRows = this.getAttribute('data-min-rows')|0, rows;
+        this.rows = minRows;
+        rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 16);
+        this.rows = 7;//minRows + rows;
+    });*/
+</script>

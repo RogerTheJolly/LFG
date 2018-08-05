@@ -32,6 +32,33 @@ button{
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
 }
+#chatBox{
+	width: 95%;
+	height: 500px;
+	border: 1px solid black;
+	border-radius: 6px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#messageBox{
+	width: 95%;
+	height: auto;
+	border: 1px solid black;
+	margin-left: auto;
+	margin-right: auto;
+}
+.autoExpand{
+	display: block;
+	box-sizing: padding-box;
+	overflow: hidden;
+	width: 95%;
+	font-size: 14px;
+	border: 1px solid black;
+	border-radius: 6px;
+	box-shadow: 2px 2px 8px rgba(black, .3);
+	margin-left: auto;
+	margin-right: auto;
+}
 #messageList{
 	height: 40px;
 	overflow-y: hidden;

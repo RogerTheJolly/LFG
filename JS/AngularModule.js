@@ -15,6 +15,12 @@ app.config(function($routeProvider)
         templateUrl: 'group.html',
 		controller: 'GroupController'
     })
+	
+	.when('/message',
+    {
+        templateUrl: 'message.html',
+		controller: 'MessageController'
+    })
 
     .when('/about',
     {
@@ -26,7 +32,33 @@ app.config(function($routeProvider)
         redirectTo: '/'
     });
 });
+app.controller('MessageController', function($scope, $rootScope, $window, StoreService)
+{
+	//TODO: make this global
+	$scope.setUser = function(user){
+		$scope.user = {};
+		$scope.user[user] = true;
+	};
+	
+	var docRef = db.collection("groups").doc($window.location.toString().split("message?")[1]);
 
+	docRef.get().then(function(doc) {
+		if (doc.exists) {
+			$scope.$apply(function () {
+				$scope.groupName = doc.data().title.toString();
+				$scope.groupImage = doc.data().image.toString();
+				$scope.groupDesc = doc.data().about.toString();
+				$scope.groupProperties = doc.data().properties;		
+				$scope.game = doc.data().game;
+			});
+		} else {
+			console.log("No such group!");
+		}
+	}).catch(function(error) {
+		console.log("Error getting group data:", error);
+	});
+	
+});
 app.controller('loginController', function($scope, $rootScope, StoreService)
 {
 	//This will trigger the loader div
